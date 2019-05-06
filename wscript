@@ -15,9 +15,9 @@ def options(opt):
 
 def configure(conf):
 
-    # If the Python extension flags are empty, then detect the Python config
+    # Configure Python extension flags if necessary
     # (boost-python might have already completed the Python configuration)
-    if not conf.env['BUILD_PYTHON']:
+    if 'BUILD_PYTHON' not in conf.env:
         try:
             conf.load('python')
             conf.check_python_headers()
