@@ -10,7 +10,22 @@ VERSION = '2.0.0'
 def options(opt):
 
     if opt.is_toplevel():
+
         opt.load('python')
+
+        opt.add_option(
+            "--test_filter",
+            default=None,
+            action="store",
+            help="Run all tests that include the substring specified."
+            "Wildcards not allowed. (Used with --run_tests)",
+        )
+
+        opt.add_option(
+            "--pytest_basetemp",
+            default="pytest_temp",
+            help="Set the basetemp folder where pytest executes the tests",
+        )
 
 
 def configure(conf):
@@ -79,17 +94,49 @@ def build(bld):
 
 
 def exec_test_pybind11(bld):
-    python = bld.env['PYTHON'][0]
-    env = dict(os.environ)
-    env['PYTHONPATH'] = os.path.join(bld.out_dir, 'test')
+
+    build_path = os.path.join(bld.path.abspath(), 'build')
+    venv = bld.create_virtualenv(
+        cwd=build_path, name="virtualenv-tests", overwrite=False)
+
+    # Install pytest in the virtualenv
+    venv.run('python -m pip install pytest')
+
+    # We override the pytest temp folder with the basetemp option,
+    # so the test folders will be available at the specified location
+    # on all platforms.
+    basetemp = os.path.abspath(os.path.expanduser(
+        bld.options.pytest_basetemp))
+
+    # We need to manually remove the previously created basetemp folder,
+    # because pytest uses os.listdir in the removal process, and that fails
+    # if there are any broken symlinks in that folder.
+    if os.path.exists(basetemp):
+        waflib.extras.wurf.directory.remove_directory(path=basetemp)
+
+    testdir = bld.dependency_node("pybind11-source").find_node('tests')
+
+    # Use -B to avoid writing any .pyc files
+    command = 'python -B -m pytest {} --basetemp {}'.format(
+        testdir.abspath(), basetemp)
+
+    # Adds the test filter if specified
+    if bld.options.test_filter:
+        command += ' -k "{}"'.format(bld.options.test_filter)
+
+    venv.run(command)
+
+#    python = bld.env['PYTHON'][0]
+#    env = dict(os.environ)
+#    env['PYTHONPATH'] = os.path.join(bld.out_dir, 'test')
 
     # Run some unit tests in the 'tests' folder
-    tests = os.path.join(bld.dependency_path('pybind11-source'), 'tests')
-    if os.path.exists(tests):
+#    tests = os.path.join(bld.dependency_path('pybind11-source'), 'tests')
+#    if os.path.exists(tests):
         #for f in sorted(os.listdir('tests')):
-        for f in ['test_class.py']:
-            if f.endswith('.py'):
-                test = os.path.join(tests, f)
-                bld.cmd_and_log('{0} {1}\n'.format(python, test), env=env)
+#        for f in ['test_class.py']:
+#            if f.endswith('.py'):
+#                test = os.path.join(tests, f)
+#                bld.cmd_and_log('{0} {1}\n'.format(python, test), env=env)
 
 
