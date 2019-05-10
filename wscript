@@ -25,13 +25,31 @@ def configure(conf):
         except:
             conf.env['BUILD_PYTHON'] = False
 
+    # If the Python configuration failed, then we cannot continue
+    if not conf.env['BUILD_PYTHON']:
+        conf.fatal('Python was not configured properly')
+
+    # Add some cxxflags to suppress some compiler-specific warnings
+    cxxflags = []
+    CXX = conf.env.get_flat("CXX")
+    # The deprecated "register" keyword is present in some Python 2.7 headers,
+    # so the following flags are used to suppress these warnings (which are
+    # treated as errors in C++17 mode)
+    if 'g++' in CXX or 'clang' in CXX:
+        cxxflags += ['-Wno-register']
+    # For MSVC, disable the C5033 warning (deprecated register keyword)
+    if 'CL.exe' in CXX or 'cl.exe' in CXX:
+        cxxflags += ['/wd5033']
+    # Pybind11 is explicitly invoking sized deallocation:
+    # https://github.com/pybind/pybind11/issues/1604
+    # So this flag is needed for clang in C++17 mode:
+    if 'clang' in CXX:
+        cxxflags += ['-fsized-deallocation']
+
+    conf.env['CXXFLAGS_PYBIND11'] = cxxflags
+
 
 def build(bld):
-
-    # Ensure that Python was configured properly in the configure step of
-    # the boost wscript
-    if not bld.env['BUILD_PYTHON']:
-        bld.fatal('Python was not configured properly')
 
     bld.env.append_unique(
         'DEFINES_STEINWURF_VERSION',
@@ -43,7 +61,8 @@ def build(bld):
     includes = sources.find_dir('include')
 
     bld(name='pybind11_includes',
-        export_includes=[includes])
+        export_includes=[includes],
+        use=['PYBIND11'])
 
     if bld.is_toplevel():
 
