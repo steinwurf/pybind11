@@ -44,9 +44,16 @@ def configure(conf):
     if not conf.env['BUILD_PYTHON']:
         conf.fatal('Python was not configured properly')
 
+    CXX = conf.env.get_flat("CXX")
+
+    # Override python-config's compiler flags, because these are not
+    # compatible with the common C++ flags defined in our waf-tools
+    conf.env['DEFINES_PYEXT'] = []
+    conf.env['CFLAGS_PYEXT'] = []
+    conf.env['CXXFLAGS_PYEXT'] = []
+
     # Add some cxxflags to suppress some compiler-specific warnings
     cxxflags = []
-    CXX = conf.env.get_flat("CXX")
     # The deprecated "register" keyword is present in some Python 2.7 headers,
     # so the following flags are used to suppress these warnings (which are
     # treated as errors in C++17 mode)

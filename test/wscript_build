@@ -1,30 +1,10 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-import os
-
-print(bld.env['DEFINES_PYEXT'])
-print(bld.env['CFLAGS_PYEXT'])
-print(bld.env['CXXFLAGS_PYEXT'])
-
-# Remove NDEBUG which is added from conf.check_python_headers
-flag_to_remove = 'NDEBUG'
-defines = ['DEFINES_PYEMBED', 'DEFINES_PYEXT']
-for define in defines:
-    while (flag_to_remove in bld.env[define]):
-        bld.env[define].remove(flag_to_remove)
-
-# Override the PYEXT compiler flags that interfere with the waf-tools flags
-bld.env['CFLAGS_PYEXT'] = []
-bld.env['CXXFLAGS_PYEXT'] = []
-
-print(bld.env['DEFINES_PYEXT'])
-
 #CXX = bld.env.get_flat("CXX")
 # Matches both /usr/bin/g++ and /usr/bin/clang++
 #if 'g++' in CXX or 'clang' in CXX:
 #    bld.env.append_value('CXXFLAGS', '-fPIC')
-
 
 tests = bld.dependency_node('pybind11-source').find_dir('tests')
 #sources = tests.find_node(['pybind11_tests.cpp', 'test_class.cpp'])
