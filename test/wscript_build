@@ -23,26 +23,24 @@ bld.env['CXXFLAGS_PYEXT'] = []
 #if 'g++' in CXX or 'clang' in CXX:
 #    bld.env.append_value('CXXFLAGS', '-fPIC')
 
-extra_linkflags = []
-
-#CXX = bld.env.get_flat("CXX")
-# Matches MSVC
-#if 'CL.exe' in CXX or 'cl.exe' in CXX:
-#   extra_linkflags = ['/EXPORT:initpybind11']
 
 tests = bld.dependency_node('pybind11-source').find_dir('tests')
 #sources = tests.find_node(['pybind11_tests.cpp', 'test_class.cpp'])
 sources = tests.ant_glob(
-    '*.cpp', excl=['*eigen*', '*numpy*', '*factory*', '*pickling*'])
+    '*.cpp', excl=['*eigen*', 'pybind11_cross_module_tests.cpp'])
 
 bld(
     features='cxx cxxshlib pyext',
     source=sources,
     target='pybind11_tests',
-    name='pybind11_tests',
-    linkflags=extra_linkflags,
-    use=[
-        'STEINWURF_VERSION',
-        'pybind11_includes'
-    ]
+    use=['pybind11_includes']
 )
+
+# The second module contains tests that require multiple modules
+bld(
+    features='cxx cxxshlib pyext',
+    source=tests.find_node(['pybind11_cross_module_tests.cpp']),
+    target='pybind11_cross_module_tests',
+    use=['pybind11_includes']
+)
+

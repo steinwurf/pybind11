@@ -124,6 +124,7 @@ def exec_test_pybind11(bld):
     if bld.options.test_filter:
         command += ' -k "{}"'.format(bld.options.test_filter)
 
+    venv.env['PYTHONPATH'] = os.path.join(bld.out_dir, 'test')
     venv.run(command)
 
 #    python = bld.env['PYTHON'][0]
