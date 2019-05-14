@@ -110,22 +110,9 @@ def exec_test_pybind11(bld):
     # Adds the test filter if specified
     if bld.options.test_filter:
         command += ' -k "{}"'.format(bld.options.test_filter)
+    else:
+        # By default, disable the tests are not supported on our buildslaves
+        command += ' -k "not test_iostream and not test_eigen"'
 
     venv.env['PYTHONPATH'] = os.path.join(bld.out_dir, 'test')
     venv.run(command)
-
-#    python = bld.env['PYTHON'][0]
-#    env = dict(os.environ)
-#    env['PYTHONPATH'] = os.path.join(bld.out_dir, 'test')
-
-    # Run some unit tests in the 'tests' folder
-#    tests = os.path.join(bld.dependency_path('pybind11-source'), 'tests')
-#    if os.path.exists(tests):
-        #for f in sorted(os.listdir('tests')):
-#        for f in ['test_iostream.py']:
-#            if f.endswith('.py'):
-#                test = os.path.join(tests, f)
-#                bld.cmd_and_log(
-#                    '{0} -B -m pytest {1}\n'.format(python, test), env=env)
-
-
