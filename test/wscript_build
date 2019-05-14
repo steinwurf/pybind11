@@ -1,13 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-#CXX = bld.env.get_flat("CXX")
-# Matches both /usr/bin/g++ and /usr/bin/clang++
-#if 'g++' in CXX or 'clang' in CXX:
-#    bld.env.append_value('CXXFLAGS', '-fPIC')
-
 tests = bld.dependency_node('pybind11-source').find_dir('tests')
-#sources = tests.find_node(['pybind11_tests.cpp', 'test_class.cpp'])
 sources = tests.ant_glob(
     '*.cpp', excl=['*eigen*', 'pybind11_cross_module_tests.cpp'])
 

@@ -45,6 +45,14 @@ def configure(conf):
     conf.env['CFLAGS_PYEXT'] = []
     conf.env['CXXFLAGS_PYEXT'] = []
 
+    # Python extensions are shared libraries, so all the object files that
+    # are included in the library must be compiled using the -fPIC flag
+    # (position independent code). We can only guarantee this if the flag
+    # is added globally in waf for compiling all C/C++ source files.
+    if 'g++' in CXX or 'clang' in CXX:
+        conf.env.append_value('CFLAGS', '-fPIC')
+        conf.env.append_value('CXXFLAGS', '-fPIC')
+
     # Add some cxxflags to suppress some compiler-specific warnings
     cxxflags = []
     # The deprecated "register" keyword is present in some Python 2.7 headers,
