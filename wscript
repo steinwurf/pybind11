@@ -10,7 +10,15 @@ VERSION = '2.0.0'
 def options(opt):
 
     if opt.is_toplevel():
+
         opt.load('python')
+
+        opt.add_option(
+            "--test_filter",
+            default=None,
+            action="store",
+            help="Run all tests that include the substring specified."
+            "Wildcards not allowed. (Used with --run_tests)")
 
 
 def configure(conf):
@@ -29,9 +37,24 @@ def configure(conf):
     if not conf.env['BUILD_PYTHON']:
         conf.fatal('Python was not configured properly')
 
+    CXX = conf.env.get_flat("CXX")
+
+    # Override python-config's compiler flags, because these are not
+    # compatible with the common C++ flags defined in our waf-tools
+    conf.env['DEFINES_PYEXT'] = []
+    conf.env['CFLAGS_PYEXT'] = []
+    conf.env['CXXFLAGS_PYEXT'] = []
+
+    # Python extensions are shared libraries, so all the object files that
+    # are included in the library must be compiled using the -fPIC flag
+    # (position independent code). We can only guarantee this if the flag
+    # is added globally in waf for compiling all C/C++ source files.
+    if 'g++' in CXX or 'clang' in CXX:
+        conf.env.append_value('CFLAGS', '-fPIC')
+        conf.env.append_value('CXXFLAGS', '-fPIC')
+
     # Add some cxxflags to suppress some compiler-specific warnings
     cxxflags = []
-    CXX = conf.env.get_flat("CXX")
     # The deprecated "register" keyword is present in some Python 2.7 headers,
     # so the following flags are used to suppress these warnings (which are
     # treated as errors in C++17 mode)
@@ -79,17 +102,25 @@ def build(bld):
 
 
 def exec_test_pybind11(bld):
-    python = bld.env['PYTHON'][0]
-    env = dict(os.environ)
-    env['PYTHONPATH'] = os.path.join(bld.out_dir, 'test')
 
-    # Run some unit tests in the 'tests' folder
-    tests = os.path.join(bld.dependency_path('pybind11-source'), 'tests')
-    if os.path.exists(tests):
-        #for f in sorted(os.listdir('tests')):
-        for f in ['test_class.py']:
-            if f.endswith('.py'):
-                test = os.path.join(tests, f)
-                bld.cmd_and_log('{0} {1}\n'.format(python, test), env=env)
+    build_path = os.path.join(bld.path.abspath(), 'build')
+    venv = bld.create_virtualenv(
+        cwd=build_path, name="virtualenv-tests", overwrite=False)
 
+    # Install pytest in the virtualenv
+    venv.run('python -m pip install pytest')
 
+    testdir = bld.dependency_node("pybind11-source").find_node('tests')
+
+    # Use -B to avoid writing any .pyc files
+    command = 'python -B -m pytest {}'.format(testdir.abspath())
+
+    # Adds the test filter if specified
+    if bld.options.test_filter:
+        command += ' -k "{}"'.format(bld.options.test_filter)
+    else:
+        # By default, disable the tests are not supported on our buildslaves
+        command += ' -k "not test_iostream and not test_eigen"'
+
+    venv.env['PYTHONPATH'] = os.path.join(bld.out_dir, 'test')
+    venv.run(command)
