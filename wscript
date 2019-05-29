@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 import os
+from waflib.extras.wurf.directory import remove_directory
 
 APPNAME = 'pybind11'
 VERSION = '1.0.0'
@@ -70,6 +71,15 @@ def configure(conf):
         cxxflags += ['-fsized-deallocation']
 
     conf.env['CXXFLAGS_PYBIND11'] = cxxflags
+
+    if conf.is_toplevel():
+
+        # Remove the virtualenv folder when we (re-)configure
+        venv_path = os.path.join(
+            conf.path.abspath(), 'build', 'virtualenv-tests')
+
+        if os.path.isdir(venv_path):
+            remove_directory(venv_path)
 
 
 def build(bld):
