@@ -118,7 +118,10 @@ def exec_test_pybind11(bld):
         cwd=build_path, name="virtualenv-tests", overwrite=False)
 
     # Install pytest in the virtualenv
-    venv.run('python -m pip install pytest')
+    # The pybind11 tests are not compatible with this ExceptionInfo change:
+    # https://github.com/pytest-dev/pytest/pull/5413
+    # that was added in pytest 5.0.0, so we must use an earlier version
+    venv.run('python -m pip install "pytest<5.0.0"')
 
     testdir = bld.dependency_node("pybind11-source").find_node('tests')
 
