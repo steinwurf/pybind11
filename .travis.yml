@@ -24,13 +24,10 @@ matrix:
       env:
         - CHOCO_PYTHON="/c/Python37"
       before_install:
+        # We can only detect the VS2017 compiler with Python 3
         - choco install python --version 3.7.4
         - export PATH=$CHOCO_PYTHON:$PATH
-        - echo $PATH
       install:
-        - python --version
-        - echo $PATH
-        - which python
         # git bash changes the codepage to 65001 which breaks waf's msvc tool,
         # so we run the configure step in powershell using the 850 codepage
         - powershell "chcp 850; python --version; python waf configure"
