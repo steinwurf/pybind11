@@ -24,7 +24,7 @@ matrix:
       env:
         - CHOCO_PYTHON="/c/Python37"
       before_install:
-        # We can only detect the VS2017 compiler with Python 3
+        # We can only detect the VS2017 compiler with Python 3 installed
         - choco install python --version 3.7.4
         - export PATH=$CHOCO_PYTHON:$PATH
       install:
