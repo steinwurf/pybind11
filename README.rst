@@ -2,6 +2,9 @@
 pybind11
 ========
 
+.. image:: https://travis-ci.org/steinwurf/pybind11.svg?branch=master
+    :target: https://travis-ci.org/steinwurf/pybind11
+    
 This repository contains waf build scripts for https://github.com/pybind/pybind11
 that are necessary for integration with other Steinwurf libraries.
 
