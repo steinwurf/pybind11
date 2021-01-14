@@ -12,7 +12,7 @@
         "name": "pybind11-source",
         "resolver": "git",
         "method": "checkout",
-        "checkout": "35045eee",
+        "checkout": "230fa53f168b3a185dadfa9fb35472a101012eaa",
         "sources": [
             "github.com/pybind/pybind11.git"
         ]

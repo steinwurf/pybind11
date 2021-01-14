@@ -6,7 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Major: Use pybind11 at checkout 230fa53f168b3a185dadfa9fb35472a101012eaa.
 
 1.0.0
 -----
