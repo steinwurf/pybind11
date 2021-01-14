@@ -123,6 +123,7 @@ def exec_test_pybind11(bld):
     # that was added in pytest 5.0.0, so we must use an earlier version
     venv.run('python -m pip install "pytest<5.0.0"')
     venv.run('python -m pip install "numpy"')
+    venv.run('python -m pip install "eigen"')
 
     testdir = bld.dependency_node("pybind11-source").find_node('tests')
 
