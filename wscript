@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 import os
+import setuptools
 from waflib.extras.wurf.directory import remove_directory
 
 APPNAME = 'pybind11'
