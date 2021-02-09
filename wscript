@@ -115,8 +115,7 @@ def build(bld):
 def exec_test_pybind11(bld):
 
     build_path = os.path.join(bld.path.abspath(), 'build')
-    venv = bld.create_virtualenv(
-        cwd=build_path, name="virtualenv-tests", overwrite=False)
+    venv = bld.create_virtualenv(name="virtualenv-tests", overwrite=False)
 
     # Install pytest in the virtualenv
     # The pybind11 tests are not compatible with this ExceptionInfo change:
