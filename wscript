@@ -101,6 +101,13 @@ def build(bld):
         bld.recurse("test")
 
     if bld.is_toplevel():
+        bld(
+            features="cxx cxxshlib pyext",
+            source=bld.path.ant_glob("example/hello_world.cpp"),
+            target="hello_world",
+            use=["pybind11_includes"],
+        )
+
         if bld.has_tool_option("run_tests"):
             bld.add_post_fun(exec_test_python)
 
