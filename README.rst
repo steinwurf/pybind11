@@ -2,9 +2,14 @@
 pybind11
 ========
 
-.. image:: https://travis-ci.org/steinwurf/pybind11.svg?branch=master
-    :target: https://travis-ci.org/steinwurf/pybind11
-    
+|C++ make-specs| |No Assertions|
+
+.. |No Assertions| image:: https://github.com/steinwurf/pybind11/actions/workflows/nodebug.yml/badge.svg
+   :target: https://github.com/steinwurf/pybind11/actions/workflows/nodebug.yml
+   
+.. |C++ make-specs| image:: https://github.com/steinwurf/pybind11/actions/workflows/cxx_mkspecs.yml/badge.svg
+   :target: https://github.com/steinwurf/pybind11/actions/workflows/cxx_mkspecs.yml
+   
 This repository contains waf build scripts for https://github.com/pybind/pybind11
 that are necessary for integration with other Steinwurf libraries.
 
