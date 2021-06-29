@@ -27,17 +27,19 @@ def configure(conf):
 
     # Configure Python extension flags if necessary
     # (boost-python might have already completed the Python configuration)
+    error_message = "Python was not configured properly"
     if "BUILD_PYTHON" not in conf.env:
         try:
             conf.load("python")
             conf.check_python_headers()
             conf.env["BUILD_PYTHON"] = True
-        except:
+        except Exception as e:
             conf.env["BUILD_PYTHON"] = False
+            error_message += "\n" + str(e)
 
     # If the Python configuration failed, then we cannot continue
     if not conf.env["BUILD_PYTHON"]:
-        conf.fatal("Python was not configured properly")
+        conf.fatal(error_message)
 
     CXX = conf.env.get_flat("CXX")
 
@@ -72,14 +74,6 @@ def configure(conf):
         cxxflags += ["-fsized-deallocation"]
 
     conf.env["CXXFLAGS_PYBIND11"] = cxxflags
-
-    if conf.is_toplevel():
-
-        # Remove the virtualenv folder when we (re-)configure
-        venv_path = os.path.join(conf.path.abspath(), "build", "virtualenv-tests")
-
-        if os.path.isdir(venv_path):
-            remove_directory(venv_path)
 
 
 def build(bld):
