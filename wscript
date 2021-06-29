@@ -129,8 +129,8 @@ def exec_test_python(ctx):
         if ctx.options.test_filter:
             command += ' -k "{}"'.format(ctx.options.test_filter)
         else:
-            # By default, disable the tests are not supported on our buildslaves
-            command += ' -k "not test_iostream and not test_eigen and not test_cross_module_gil"'
+            # By default, disable the tests are not supported by runners
+            command += ' -k "not test_chrono and not test_iostream and not test_eigen and not test_cross_module_gil"'
 
         venv.env["PYTHONPATH"] = os.path.join(ctx.out_dir, "test")
         venv.run(command)
