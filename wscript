@@ -28,9 +28,12 @@ def configure(conf):
     # Configure Python extension flags if necessary
     # (boost-python might have already completed the Python configuration)
     if "BUILD_PYTHON" not in conf.env:
-        conf.load("python")
-        conf.check_python_headers()
-        conf.env["BUILD_PYTHON"] = True
+        try:
+            conf.load("python")
+            conf.check_python_headers()
+            conf.env["BUILD_PYTHON"] = True
+        except:
+            conf.env["BUILD_PYTHON"] = False
 
     # If the Python configuration failed, then we cannot continue
     if not conf.env["BUILD_PYTHON"]:

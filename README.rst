@@ -36,3 +36,6 @@ Configure and build the project::
 Run the unit tests::
 
     python waf --run_tests
+
+On windows you may need to set the `MSSdk` and `DISTUTILS_USE_SDK`
+environment variables to configure the project.
