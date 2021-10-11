@@ -57,7 +57,7 @@ jobs:
           - cxx_mkspec: cxx_msvc16_x64
             name: MSVC 16 64-bit
             # On Windows Python3 is just python
-            # See: https://stackoverflow.com/a/48356397/246759
+            # See https://stackoverflow.com/a/48356397/246759
             python: python
           - cxx_mkspec: cxx_clang70_x64
             name: Clang 7.0 64-Bit
