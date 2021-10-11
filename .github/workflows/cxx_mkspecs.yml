@@ -64,7 +64,7 @@ jobs:
             python: python3
           - cxx_mkspec: cxx_gxx83_x64
             name: GCC 8.3 64-Bit
-            python: python
+            python: python3
     runs-on: [self-hosted, "${{ matrix.cxx_mkspec }}"]
     name: ${{ matrix.name }}
     steps:
