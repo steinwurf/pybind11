@@ -7,11 +7,14 @@ pybind11
 .. |CMake| image:: https://github.com/steinwurf/pybind11/actions/workflows/cmake.yml/badge.svg
    :target: https://github.com/steinwurf/pybind11/actions/workflows/cmake.yml
 
-.. |C++ make-specs| image:: https://github.com/steinwurf/pybind11/actions/workflows/cxx_mkspecs.yml/badge.svg
-   :target: https://github.com/steinwurf/pybind11/actions/workflows/cxx_mkspecs.yml
+.. |Linux Waf| image:: https://github.com/steinwurf/pybind11/actions/workflows/cxx_mkspecs.yml/badge.svg
+   :target: https://github.com/steinwurf/pybind11/actions/workflows/linux_waf.yml
 
 .. |No Assertions| image:: https://github.com/steinwurf/pybind11/actions/workflows/nodebug.yml/badge.svg
    :target: https://github.com/steinwurf/pybind11/actions/workflows/nodebug.yml
+   
+.. |Cppcheck| image:: https://github.com/steinwurf/pybind11/actions/workflows/cppcheck.yml/badge.svg
+   :target: https://github.com/steinwurf/pybind11/actions/workflows/cppcheck.yml
    
 This repository contains waf build scripts for https://github.com/pybind/pybind11
 that are necessary for integration with other Steinwurf libraries.
