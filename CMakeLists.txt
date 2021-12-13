@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(hello_world)
+message(STATUS ${STEINWURF_RESOLVE})
+message(STATUS ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Use waf to resolve dependencies
 if(NOT DEFINED STEINWURF_RESOLVE)
