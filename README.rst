@@ -7,7 +7,7 @@ pybind11
 .. |CMake| image:: https://github.com/steinwurf/pybind11/actions/workflows/cmake.yml/badge.svg
    :target: https://github.com/steinwurf/pybind11/actions/workflows/cmake.yml
 
-.. |Linux Waf| image:: https://github.com/steinwurf/pybind11/actions/workflows/cxx_mkspecs.yml/badge.svg
+.. |Linux Waf| image:: https://github.com/steinwurf/pybind11/actions/workflows/linux_waf.yml/badge.svg
    :target: https://github.com/steinwurf/pybind11/actions/workflows/linux_waf.yml
 
 .. |No Assertions| image:: https://github.com/steinwurf/pybind11/actions/workflows/nodebug.yml/badge.svg
