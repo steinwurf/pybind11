@@ -13,7 +13,7 @@ if(NOT DEFINED STEINWURF_RESOLVE)
     message(FATAL_ERROR "Failed: ${STATUS}")
   endif()
   set(STEINWURF_RESOLVE "${CMAKE_CURRENT_SOURCE_DIR}/resolve_symlinks")
-  set(STEINWURF_TOP_NAME otacast_python)
+  set(STEINWURF_TOP_NAME pybind11)
 endif()
 
 # Use position independent code in this library and all dependencies
