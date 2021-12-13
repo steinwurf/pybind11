@@ -2,7 +2,7 @@
 pybind11
 ========
 
-|CMake| |C++ make-specs| |No Assertions|
+|CMake| |C++ make-specs| |No Assertions| |Cppcheck|
 
 .. |CMake| image:: https://github.com/steinwurf/pybind11/actions/workflows/cmake.yml/badge.svg
    :target: https://github.com/steinwurf/pybind11/actions/workflows/cmake.yml
