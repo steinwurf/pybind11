@@ -24,7 +24,4 @@ add_subdirectory("${STEINWURF_RESOLVE}/pybind11-source")
 
 # Define library
 file(GLOB_RECURSE hello_world_source ./example/hello_world.cpp)
-
-#find_package(pybind11 CONFIG)
-
 pybind11_add_module(hello_world ${hello_world_source})
