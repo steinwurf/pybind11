@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+4.0.0
+-----
 * Major: Use pybind11 at checkout v2.9.1.
 * Minor: Updated waf.
 
