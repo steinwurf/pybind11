@@ -6,6 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
+* Major: Upgraded version
 * Minor: Updated waf.
 
 3.0.1
