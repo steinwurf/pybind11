@@ -6,7 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
-* Major: Upgraded version
+* Major: Use pybind11 at checkout v2.9.1.
 * Minor: Updated waf.
 
 3.0.1
