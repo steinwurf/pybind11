@@ -22,7 +22,7 @@ def options(opt):
 
 
 def configure(conf):
-    conf.use_cxx_std(11)
+    conf.set_cxx_std(11)
 
     # Configure Python extension flags if necessary
     # (boost-python might have already completed the Python configuration)
