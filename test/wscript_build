@@ -1,22 +1,20 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-tests = bld.dependency_node('pybind11-source').find_dir('tests')
-sources = tests.ant_glob(
-    '*.cpp', excl=['*eigen*', 'pybind11_cross_module_tests.cpp'])
+tests = bld.dependency_node("pybind11-source").find_dir("tests")
+sources = tests.ant_glob("*.cpp", excl=["*eigen*", "pybind11_cross_module_tests.cpp"])
 
 bld(
-    features='cxx cxxshlib pyext',
+    features="cxx cxxshlib pyext",
     source=sources,
-    target='pybind11_tests',
-    use=['pybind11_includes']
+    target="pybind11_tests",
+    use=["pybind11_includes"],
 )
 
 # The second module contains tests that require multiple modules
 bld(
-    features='cxx cxxshlib pyext',
-    source=tests.find_node(['pybind11_cross_module_tests.cpp']),
-    target='pybind11_cross_module_tests',
-    use=['pybind11_includes']
+    features="cxx cxxshlib pyext",
+    source=tests.find_node(["pybind11_cross_module_tests.cpp"]),
+    target="pybind11_cross_module_tests",
+    use=["pybind11_includes"],
 )
-

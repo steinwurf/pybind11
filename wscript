@@ -9,9 +9,7 @@ VERSION = "4.0.0"
 
 
 def options(opt):
-
     if opt.is_toplevel():
-
         opt.load("python")
 
         opt.add_option(
@@ -24,6 +22,7 @@ def options(opt):
 
 
 def configure(conf):
+    conf.use_cxx_std(11)
 
     # Configure Python extension flags if necessary
     # (boost-python might have already completed the Python configuration)
@@ -77,7 +76,6 @@ def configure(conf):
 
 
 def build(bld):
-
     # Path to the source repo
     sources = bld.dependency_node("pybind11-source")
     includes = sources.find_dir("include")
@@ -85,7 +83,6 @@ def build(bld):
     bld(name="pybind11_includes", export_includes=[includes], use=["PYBIND11"])
 
     if bld.is_toplevel():
-
         # The actual sources are stored outside this repo - so we manually
         # add them for the solution generator
         bld.msvs_extend_sources = [sources]
@@ -107,9 +104,7 @@ def build(bld):
 
 
 def exec_test_python(ctx):
-
     with ctx.create_virtualenv() as venv:
-
         # Install pytest in the virtualenv
         # The pybind11 tests are not compatible with this ExceptionInfo change:
         # https://github.com/pytest-dev/pytest/pull/5413
