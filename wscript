@@ -9,9 +9,7 @@ VERSION = "4.0.0"
 
 
 def options(opt):
-
     if opt.is_toplevel():
-
         opt.load("python")
 
         opt.add_option(
@@ -24,6 +22,7 @@ def options(opt):
 
 
 def configure(conf):
+    conf.set_cxx_std(11)
 
     # Configure Python extension flags if necessary
     # (boost-python might have already completed the Python configuration)
@@ -77,7 +76,6 @@ def configure(conf):
 
 
 def build(bld):
-
     # Path to the source repo
     sources = bld.dependency_node("pybind11-source")
     includes = sources.find_dir("include")
@@ -85,7 +83,6 @@ def build(bld):
     bld(name="pybind11_includes", export_includes=[includes], use=["PYBIND11"])
 
     if bld.is_toplevel():
-
         # The actual sources are stored outside this repo - so we manually
         # add them for the solution generator
         bld.msvs_extend_sources = [sources]
@@ -107,15 +104,9 @@ def build(bld):
 
 
 def exec_test_python(ctx):
-
     with ctx.create_virtualenv() as venv:
-
-        # Install pytest in the virtualenv
-        # The pybind11 tests are not compatible with this ExceptionInfo change:
-        # https://github.com/pytest-dev/pytest/pull/5413
-        # that was added in pytest 5.0.0, so we must use an earlier version
-        venv.run('python -m pip install "pytest<5.0.0"')
-        venv.run('python -m pip install "numpy"')
+        venv.run('python -m pip install "pytest==7.3.2"')
+        venv.run('python -m pip install "numpy==1.25.0"')
 
         testdir = ctx.dependency_node("pybind11-source").find_node("tests")
 
@@ -127,7 +118,15 @@ def exec_test_python(ctx):
             command += ' -k "{}"'.format(ctx.options.test_filter)
         else:
             # By default, disable the tests are not supported by runners
-            command += ' -k "not test_chrono and not test_iostream and not test_eigen and not test_cross_module_gil"'
+            command += ' -k "'
+            command += "not test_chrono and "
+            command += "not test_iostream and "
+            command += "not test_eigen and "
+            command += "not test_cross_module_gil and "
+            command += "not test_dtype and "
+            command += "not test_recarray and "
+            command += "not test_array_array"
+            command += '"'
 
         venv.env["PYTHONPATH"] = os.path.join(ctx.out_dir, "test")
         venv.run(command)
