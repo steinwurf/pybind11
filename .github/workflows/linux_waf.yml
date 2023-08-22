@@ -8,7 +8,7 @@ name: Linux Waf
   push:
     branches:
     - master
-  pull_request: null
+  pull_request:
 jobs:
   Linux:
     container:
