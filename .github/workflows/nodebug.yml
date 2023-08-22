@@ -1,3 +1,14 @@
+name: No Assertions
+'on':
+  workflow_dispatch:
+    inputs:
+      extra_resolve_options:
+        description: Extra Resolve Options
+        required: false
+  push:
+    branches:
+    - master
+  pull_request:
 env:
   EXTRA_RESOLVE_OPTIONS: ${{ github.event.inputs.extra_resolve_options }}
 jobs:
@@ -29,16 +40,3 @@ jobs:
         '
     - name: Test
       run: python3 waf --run_tests
-name: No Assertions
-'on':
-  pull_request: null
-  push:
-    branches:
-    - master
-  schedule:
-  - cron: 0 1 * * *
-  workflow_dispatch:
-    inputs:
-      extra_resolve_options:
-        description: Extra Resolve Options
-        required: false
