@@ -2,9 +2,6 @@
 # encoding: utf-8
 
 import os
-from waflib.extras.wurf.directory import remove_directory
-
-import importlib
 
 APPNAME = "pybind11"
 VERSION = "5.0.0"
@@ -81,9 +78,6 @@ def build(bld):
     # Path to the source repo
     sources = bld.dependency_node("pybind11-source")
     includes = sources.find_dir("include")
-
-    # Set the suffix for the built Python extensions
-    bld.env["pyext_PATTERN"] = f"%s{importlib.machinery.EXTENSION_SUFFIXES[0]}"
 
     bld(name="pybind11_includes", export_includes=[includes], use=["PYBIND11"])
 
