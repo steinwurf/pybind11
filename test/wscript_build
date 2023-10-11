@@ -2,8 +2,8 @@
 # encoding: utf-8
 
 tests = bld.dependency_node("pybind11-source").find_dir("tests")
-sources = tests.ant_glob("*.cpp", excl=["*eigen*", "pybind11_cross_module_tests.cpp"])
-
+sources = tests.ant_glob("test_*.cpp", excl=["*eigen*"])
+sources += tests.ant_glob("pybind11_tests.cpp")
 bld(
     features="cxx cxxshlib pyext",
     source=sources,

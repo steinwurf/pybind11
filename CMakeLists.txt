@@ -16,7 +16,7 @@ if(NOT DEFINED STEINWURF_RESOLVE)
   set(STEINWURF_TOP_NAME pybind11)
 endif()
 
-# Use position independent code in this library and all dependencies
+# Use position-independent code in this library and all dependencies
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # pybind11 dependency

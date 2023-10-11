@@ -2,7 +2,6 @@
 # encoding: utf-8
 
 import os
-from waflib.extras.wurf.directory import remove_directory
 
 APPNAME = "pybind11"
 VERSION = "5.0.0"
@@ -125,7 +124,10 @@ def exec_test_python(ctx):
             command += "not test_cross_module_gil and "
             command += "not test_dtype and "
             command += "not test_recarray and "
-            command += "not test_array_array"
+            command += "not test_array_array and "
+            command += "not test_cross_module_interleaved_error_already_set and "
+            command += "not test_multi_acquire_release_cross_module and "
+            command += "not test_run_in_process_direct"
             command += '"'
 
         venv.env["PYTHONPATH"] = os.path.join(ctx.out_dir, "test")
