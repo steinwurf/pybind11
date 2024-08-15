@@ -3,6 +3,7 @@
 
 import os
 from waflib.extras.wurf.directory import remove_directory
+import importlib
 
 APPNAME = "pybind11"
 VERSION = "4.0.0"
@@ -82,6 +83,9 @@ def build(bld):
     sources = bld.dependency_node("pybind11-source")
     includes = sources.find_dir("include")
 
+    # Set the suffix for the built Python extensions
+    bld.env["pyext_PATTERN"] = f"%s{importlib.machinery.EXTENSION_SUFFIXES[0]}"
+
     bld(name="pybind11_includes", export_includes=[includes], use=["PYBIND11"])
 
     if bld.is_toplevel():
@@ -127,7 +131,18 @@ def exec_test_python(ctx):
             command += ' -k "{}"'.format(ctx.options.test_filter)
         else:
             # By default, disable the tests are not supported by runners
-            command += ' -k "not test_chrono and not test_iostream and not test_eigen and not test_cross_module_gil"'
+            command += ' -k "'
+            command += "not test_chrono and "
+            command += "not test_iostream and "
+            command += "not test_eigen and "
+            command += "not test_cross_module_gil and "
+            command += "not test_dtype and "
+            command += "not test_recarray and "
+            command += "not test_array_array and "
+            command += "not test_cross_module_interleaved_error_already_set and "
+            command += "not test_multi_acquire_release_cross_module and "
+            command += "not test_run_in_process_direct"
+            command += '"'
 
         venv.env["PYTHONPATH"] = os.path.join(ctx.out_dir, "test")
         venv.run(command)
