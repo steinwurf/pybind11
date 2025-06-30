@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(hello_world)
 
-find_package(Python COMPONENTS Interpreter Development)
+find_package(Python COMPONENTS Interpreter Development REQUIRED)
 
 # Include common CMake settings
 include("${STEINWURF_RESOLVE}/toolchains/common_settings.cmake")
