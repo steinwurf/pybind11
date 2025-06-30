@@ -1,14 +1,5 @@
 [
     {
-        "name": "waf-tools",
-        "resolver": "git",
-        "method": "semver",
-        "major": 5,
-        "sources": [
-            "github.com/steinwurf/waf-tools.git"
-        ]
-    },
-    {
         "name": "pybind11-source",
         "resolver": "git",
         "method": "checkout",
@@ -16,5 +7,15 @@
         "sources": [
             "github.com/pybind/pybind11.git"
         ]
-    }
+    },
+    {
+    "name": "toolchains",
+    "internal": true,
+    "resolver": "git",
+    "method": "semver",
+    "major": 1,
+    "sources": [
+      "github.com/steinwurf/cmake-toolchains.git"
+    ]
+  }
 ]

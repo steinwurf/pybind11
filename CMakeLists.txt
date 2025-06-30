@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.12)
 project(hello_world)
 
 find_package(Python COMPONENTS Interpreter Development)
+
+# Include common CMake settings
+include("${STEINWURF_RESOLVE}/toolchains/common_settings.cmake")
+
 # Use waf to resolve dependencies
 if(NOT DEFINED STEINWURF_RESOLVE)
   message(STATUS "Resolving dependencies...")
@@ -13,7 +17,6 @@ if(NOT DEFINED STEINWURF_RESOLVE)
     message(FATAL_ERROR "Failed: ${STATUS}")
   endif()
   set(STEINWURF_RESOLVE "${CMAKE_CURRENT_SOURCE_DIR}/resolve_symlinks")
-  set(STEINWURF_TOP_NAME pybind11)
 endif()
 
 # Use position-independent code in this library and all dependencies
