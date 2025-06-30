@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(hello_world)
 
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
+find_package(Python COMPONENTS Interpreter Development)
 
 # Include common CMake settings
 include("${STEINWURF_RESOLVE}/toolchains/common_settings.cmake")
@@ -26,5 +26,5 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 add_subdirectory("${STEINWURF_RESOLVE}/pybind11-source")
 
 # Define library
-file(GLOB_RECURSE hello_world_source ./example/hello_world.cpp)
-pybind11_add_module(hello_world ${hello_world_source})
+# file(GLOB_RECURSE hello_world_source ./example/hello_world.cpp)
+# pybind11_add_module(hello_world ${hello_world_source})
