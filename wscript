@@ -4,7 +4,7 @@
 import os
 
 APPNAME = "pybind11"
-VERSION = "6.0.0"
+VERSION = "7.0.0"
 
 def options(ctx):
     ctx.load("cmake")
