@@ -1,0 +1,14 @@
+{
+    "pybind11-source": {
+        "commit_id": "8a099e44b3d5f85b20f05828d919d2332a8de841",
+        "resolver_info": "v2.11.1",
+        "sha1": "7c1cc246b22672e1f3da40e4d9d97e9ddb49f2e4",
+        "source": "github.com/pybind/pybind11.git"
+    },
+    "toolchains": {
+        "commit_id": "f7b9747ab22d7dbbeb23c9f863e735bac883566e",
+        "resolver_info": "1.0.3",
+        "sha1": "443cb23b0570dffd39283d8679ec393ed809302f",
+        "source": "github.com/steinwurf/cmake-toolchains.git"
+    }
+}
